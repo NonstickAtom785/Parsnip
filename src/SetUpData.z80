@@ -3,7 +3,7 @@ SetUpData:
   call setupRAMdata
   ld hl,ReadArcData
   ld de,TSA
-;mov 70 bytes
+;copy 71 bytes
   call mov14
   call mov14
   call mov14
@@ -51,7 +51,6 @@ SetUpData:
   ld l,a
   ld (flags+33),a
   ld (flags+34),hl
-  ld (text_mode),a
 
   ld a,3
   ld (text_logic),a

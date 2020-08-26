@@ -23,8 +23,18 @@ eval_sto_LUT:
   .dw sto_xfloat
   .dw sto_list
   .dw sto_list_ref
+  .dw sto_char
+  .dw sto_ref
+  .dw sto_display
 _:
 
+sto_display:
+  ld a,type_display
+  jr sto_
+
+sto_char:
+  ld a,type_char
+  jr sto_
 
 sto_ui8:
   ld a,type_ui8
@@ -72,22 +82,20 @@ sto_:
   ldir
   ret
 
+sto_ref:
 sto_var:
   jp err_syntax
 
 sto_str_ref:
+  ex de,hl
   ld e,(hl)
   inc hl
   ld d,(hl)
-  ex de,hl
-  ld a,(hl)
   inc hl
   ld c,(hl)
   inc hl
   ld b,(hl)
-  inc hl
-  ex de,hl
-  jr +_
+  jr sto_str
 sto_tstr_ref:
   ex de,hl
   ld e,(hl)

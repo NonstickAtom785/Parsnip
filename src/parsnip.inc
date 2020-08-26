@@ -1,8 +1,10 @@
 ;===============================================================
 ; TI-OS Equates
 ;===============================================================
-
 #define db .db
+#define bcall(x) rst 28h \ .dw x
+#define rMov9ToOP1 20h
+#define rFindSym 10h
 _FindAlphaDn    = 4A47h
 _FindAlphaUp    = 4A44h
 _RclAns         = 4AD7h
@@ -55,9 +57,6 @@ OP3             = 848Eh
 OP4             = 8499h
 OP5             = 84A4h
 OP6             = 84AFh  ;11 bytes
-intmask         = %00001011
-invlogic        = 2
-gflags          = 33
 flags           = 89F0h
 saveSScreen     = 86ECh
 textShadow      = 8508h
@@ -76,8 +75,7 @@ cmdShadow       = 966Eh  ;128 bytes
 pTemp           = 982Eh ;bottom of named vars VAT
 tempSwapArea    = 82A5h
 ramCode         = 8100h
-#define rMov9ToOP1 20h
-#define rFindSym 10h
+fmtDigits = 97B0h
 
 ;===============================================================
 ; TI-OS Flags
@@ -109,6 +107,14 @@ shiftKeepAlph     =   7        ;1=cannot cancel alpha shift
 ; Parsnip Equates
 ;===============================================================
 ;
+
+#define K_DELAY_DEFAULT 13
+#define K_DELAY_ACCEL 3
+#define char_TI_TOK
+#define EXTERNAL_FORMAT_LEN    ;Uses an external reference to get the format length
+#define EXTERNAL_FORMAT_LEN_LOC fmtDigits    ;Use for TI-OS
+
+
 ; Used by the VAT sort routine
 VATPtr      = iMathPtr1
 VATPtr_next = iMathPtr2
@@ -134,12 +140,18 @@ type_single   = 13
 type_xfloat   = 14
 type_list     = 15
 type_list_ref = 16
-
+type_char     = 17
+type_ref      = 18
+type_display  = 19
 
 X_CONST_0     = 6
 X_CONST_1     = 7
 X_CONST_PI    = 0
 X_CONST_e     = 1
+
+tok_internal  = $F1
+tok_method    = $04   ;2-byte
+tok_index     = $FF
 
 ;===============================================================
 ; Variables (RAM usage)
@@ -211,22 +223,14 @@ bit32           =   5   ;This determines if the output was 32-bit or not
 Mod2nd          =   6
 grayMode        =   7   ;This determines the checker pattern for grayscale mode
 
+MainMenuFlags   = 34
+grammer_only    =   0
+appv_only       =   1
+asm_only        =   2
+
 UserFlags       = 34
 InvertTextFlag  =   0
 InvertLCDFlag   =   1
 OnBlockFlag     =   2
-baseInput       =   3
-pxlBoundsRes    =   4
-SignedText      =   5
-;    =   6
-;    =   7
 
-ParticleFlag    = 35
-InternalFlag2   = 35
-Xis0            = 0
-inputflag       = 0
-Xis95           = 1
-Yis0            = 2
-Yis63           = 3
-OffScrn         = 4
-usingfloat      = 5
+UserFlags2      = 35

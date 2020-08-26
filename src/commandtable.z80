@@ -12,7 +12,7 @@ CommandJumpTable:
 .dw exec_sto       ; 04
 .dw ErrBadToken    ; 05
 .dw exec_open_list ; 06
-.dw exec_close_index;07
+.dw exec_close_list; 07
 .dw ErrBadToken    ; 08
 .dw ErrBadToken    ; 09
 .dw ErrBadToken    ; 0A
@@ -63,7 +63,7 @@ CommandJumpTable:
 .dw exec_num       ; 37
 .dw exec_num       ; 38
 .dw exec_num       ; 39
-.dw ErrBadToken    ; 3A
+.dw exec_dec       ; 3A
 .dw ErrBadToken    ; 3B
 .dw ErrBadToken    ; 3C
 .dw ErrBadToken    ; 3D
@@ -213,7 +213,7 @@ CommandJumpTable:
 .dw ErrBadToken    ; CD
 .dw exec_if        ; CE
 .dw ErrBadToken    ; CF
-.dw ErrBadToken    ; D0
+.dw exec_else      ; D0
 .dw exec_while     ; D1
 .dw exec_repeat    ; D2
 .dw ErrBadToken    ; D3
@@ -270,7 +270,7 @@ evalLUT:
 .dw ErrBadToken    ; 03
 .dw eval_sto       ; 04
 .dw ErrBadToken    ; 05
-.dw eval_open_list ; 06
+.dw ErrBadToken    ; 06
 .dw ErrBadToken    ; 07
 .dw ErrBadToken    ; 08
 .dw ErrBadToken    ; 09
@@ -473,7 +473,7 @@ evalLUT:
 .dw eval_if        ; CE
 .dw ErrBadToken    ; CF
 .dw ErrBadToken    ; D0
-.dw eval_while     ; D1
+.dw ErrBadToken    ; D1
 .dw eval_repeat    ; D2
 .dw ErrBadToken    ; D3
 .dw err_fatal      ; D4
@@ -505,7 +505,7 @@ evalLUT:
 .dw ErrBadToken    ; EE
 .dw ErrBadToken    ; EF
 .dw eval_pow       ; F0
-.dw ErrBadToken    ; F1
+.dw eval_internal  ; F1
 .dw ErrBadToken    ; F2
 .dw ErrBadToken    ; F3
 .dw ErrBadToken    ; F4
